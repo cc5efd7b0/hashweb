@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-512 ハッシュジェネレーター</title>
+    <link rel="stylesheet" href="theme/light.css" id="theme-style">
+</head>
+<body>
+    <div class="container">
+        <h2>SHA-512 ハッシュジェネレーター</h2>
+        <div class="header">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <!-- 初期表示はライトモード用アイコン -->
+                <img id="theme-icon" src="assets/moon.svg" alt="Theme Icon" width="32" height="32">
+            </button>
+        </div>
+
+        <label for="inputText">ハッシュ化する文字列:</label>
+        <input type="password" id="inputText">
+        <button onclick="generateAndCopyHash()">ハッシュ生成してコピー</button>
+        <div id="console" class="console"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // 初期テーマの設定
+        let currentTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(currentTheme);
+
+        // テーマを切り替える関数
+        function toggleTheme() {
+            currentTheme = (currentTheme === 'light') ? 'dark' : 'light';
+            applyTheme(currentTheme);
+            localStorage.setItem('theme', currentTheme);
+        }
+        https://gitlab.com/cc5efd7b01/sha512web.git
+        // テーマを適用する関数
+        function applyTheme(theme) {
+            const body = document.body;
+            const container = document.querySelector('.container');
+            const input = document.querySelector('input');
+            const consoleDiv = document.getElementById('console');
+            const buttons = document.querySelectorAll('button');
+            const themeIcon = document.getElementById('theme-icon');
+
+            body.classList.toggle('dark-mode', theme === 'dark');
+            container.classList.toggle('dark-mode', theme === 'dark');
+            input.classList.toggle('dark-mode', theme === 'dark');
+            consoleDiv.classList.toggle('dark-mode', theme === 'dark');
+            buttons.forEach(button => button.classList.toggle('dark-mode', theme === 'dark'));
+
+            // SVGの画像を切り替える
+            themeIcon.src = (theme === 'dark') ? 'assets/sun.svg' : 'assets/moon.svg';
+            themeIcon.alt = (theme === 'dark') ? 'Dark Theme Icon' : 'Light Theme Icon';
+        }
+    </script>
+    <script>
+        
+        function toggleTheme() {
+            const themeIcon = document.getElementById('theme-icon');
+            const themeStyle = document.getElementById('theme-style');
+
+            // 現在のテーマスタイルを取得
+            const isDarkMode = themeStyle.href.includes('dark.css');
+
+            // テーマを切り替える
+            if (isDarkMode) {
+                themeStyle.href = 'theme/light.css';
+                themeIcon.src = 'assets/moon.svg';
+            } else {
+                themeStyle.href = 'theme/dark.css';
+                themeIcon.src = 'assets/sun.svg';
+            }
+        }
+    </script>
+</body>
+</html>
