@@ -8,17 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <h2>SHA-512 ハッシュジェネレーター</h2>
         <div class="header">
+            <h3>SHA-512 ハッシュジェネレーター</h3>
             <button class="theme-toggle" onclick="toggleTheme()">
                 <!-- 初期表示はライトモード用アイコン -->
                 <img id="theme-icon" src="assets/moon.svg" alt="Theme Icon" width="32" height="32">
             </button>
         </div>
-
-        <label for="inputText">ハッシュ化する文字列:</label>
-        <input type="password" id="inputText">
-        <button onclick="generateAndCopyHash()">ハッシュ生成してコピー</button>
+        <div class="input">
+            <label for="inputText">ハッシュ化する文字列:</label>
+            <input type="password" id="inputText">
+        </div>
+        <div class="button">
+            <button onclick="generateAndCopyHash()">ハッシュ生成してコピー</button>
+        </div>
+        <div class="info">
+            <label>Enterを押しても生成&コピーできます</label>
+        </div>
         <div id="console" class="console"></div>
     </div>
 
