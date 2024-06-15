@@ -28,8 +28,6 @@
         <div id="console" class="console"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="app.js"></script>
     <script>
         // ページ読み込み時に保存されたテーマを適用する
         document.addEventListener('DOMContentLoaded', () => {
@@ -54,6 +52,51 @@
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
         }
+
+        // 文字列が入力されていない場合の出力
+        function generateAndCopyHash() {
+            const inputText = document.getElementById('inputText').value;
+            if (!inputText) {
+                addMessageToConsole('文字列を入力してください。', true);
+                return;
+            }
+
+            // Web Crypto API を使用してハッシュを生成する
+            window.crypto.subtle.digest('SHA-512', new TextEncoder().encode(inputText))
+                .then(hashBuffer => {
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                    navigator.clipboard.writeText(hashHex)
+                        .then(() => {
+                            addMessageToConsole('ハッシュ値がクリップボードにコピーされました。');
+                        })
+                        .catch(err => {
+                            addMessageToConsole('クリップボードへのコピーに失敗しました: ' + err, true);
+                        });
+                })
+                .catch(err => {
+                    addMessageToConsole('ハッシュ生成中にエラーが発生しました: ' + err, true);
+                });
+        }
+
+        // コンソールにメッセージを追加する関数
+        function addMessageToConsole(message, isError = false) {
+            const consoleElement = document.getElementById('console');
+            const timestamp = new Date().toLocaleString('ja-JP', { hour12: false });
+            const messageElement = document.createElement('p');
+            messageElement.className = 'message';
+            messageElement.innerText = `${timestamp} >> ${message}`;
+            messageElement.style.color = isError ? 'red' : 'green';
+            consoleElement.appendChild(messageElement);
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+
+        // Enterキーでハッシュ生成するためのイベントリスナー
+        document.getElementById('inputText').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                generateAndCopyHash();
+            }
+        });
     </script>
 </body>
 </html>
