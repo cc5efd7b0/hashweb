@@ -53,7 +53,6 @@
             applyTheme(newTheme);
         }
 
-        // 文字列が入力されていない場合の出力
         function generateAndCopyHash() {
             const inputText = document.getElementById('inputText').value;
             if (!inputText) {
@@ -80,15 +79,16 @@
         }
 
         // コンソールにメッセージを追加する関数
-        function addMessageToConsole(message, isError = false) {
+        function addMessageToConsole(message, isWarning = false) {
             const consoleElement = document.getElementById('console');
             const timestamp = new Date().toLocaleString('ja-JP', { hour12: false });
             const messageElement = document.createElement('p');
             messageElement.className = 'message';
             messageElement.innerText = `${timestamp} >> ${message}`;
-            messageElement.style.color = isError ? 'red' : 'green';
-            consoleElement.appendChild(messageElement);
-            consoleElement.scrollTop = consoleElement.scrollHeight;
+            messageElement.style.color = isWarning ? '#F2E700' : '#00B06B';
+
+            // 最上部にメッセージを追加
+            consoleElement.prepend(messageElement);
         }
 
         // Enterキーでハッシュ生成するためのイベントリスナー

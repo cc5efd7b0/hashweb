@@ -7,8 +7,8 @@
     src: url(../assets/ZenMaruGothic-Medium.ttf);
 }
 @font-face {
-	font-family: 'MigMix 1M';
-	src: url(../assets/migmix-1m-regular.ttf);
+	font-family: 'M plus 1 Code Light';
+	src: url(../assets/Mplus1Code-Light.otf);
 }
 
 body {
@@ -82,7 +82,7 @@ button:hover {
 }
 
 .console {
-    font-family: 'MigMix 1M';
+    font-family: 'M plus 1 Code Light';
     font-size: 13px;
     background-color: #eeeeee;
     border: 1px solid #ccc;
@@ -97,6 +97,7 @@ button:hover {
     margin-left: auto; /* 左右のマージンを自動調整 */
     margin-right: auto;
     text-align: left; /* コンソール内のテキストを左揃えに */
+    line-height: 1.5;
 }
 
 .message {
