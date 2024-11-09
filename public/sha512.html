@@ -54,29 +54,26 @@
         }
 
         function generateAndCopyHash() {
-            const inputText = document.getElementById('inputText').value;
-            if (!inputText) {
-                addMessageToConsole('文字列を入力してください。', true);
-                return;
-            }
+			const inputText = document.getElementById('inputText').value;
+			if (!inputText) {
+				addMessageToConsole('文字列を入力してください。', true);
+				return;
+			}
 
-            // Web Crypto API を使用してハッシュを生成する
-            window.crypto.subtle.digest('SHA-512', new TextEncoder().encode(inputText))
-                .then(hashBuffer => {
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                    navigator.clipboard.writeText(hashHex)
-                        .then(() => {
-                            addMessageToConsole('ハッシュ値がクリップボードにコピーされました。');
-                        })
-                        .catch(err => {
-                            addMessageToConsole('クリップボードへのコピーに失敗しました: ' + err, true);
-                        });
-                })
-                .catch(err => {
-                    addMessageToConsole('ハッシュ生成中にエラーが発生しました: ' + err, true);
-                });
-        }
+			// jsSHA を使って SHA3-512 ハッシュを生成
+			const shaObj = new jsSHA("SHA3-512", "TEXT");
+			shaObj.update(inputText);
+			const hashHex = shaObj.getHash("HEX");
+
+			// 生成したハッシュをクリップボードにコピー
+			navigator.clipboard.writeText(hashHex)
+				.then(() => {
+					addMessageToConsole('ハッシュ値がクリップボードにコピーされました。');
+				})
+				.catch(err => {
+					addMessageToConsole('クリップボードへのコピーに失敗しました: ' + err, true);
+				});
+		}
 
         // コンソールにメッセージを追加する関数
         function addMessageToConsole(message, isWarning = false) {
