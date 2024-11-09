@@ -1,5 +1,5 @@
 # License
-The Unlicense.[LICENSE](https://opensource.org/license/unlicense)  
+The Unlicense.  
   
 # Credit
 [jsSHA]() License:[The 3-Clause BSD License](https://opensource.org/license/BSD-3-clause)
